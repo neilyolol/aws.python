@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import base64,hashlib,hmac,time,urllib
 def getSignaureUrl():
+		keyFile = open('accesskey.secret','r')
 		#add AWSAccessKeyId,Service,Timestamp,Version to params
-		accessKey = 'accessKeyValue'
-		secretKey = 'secretKeyVale'
+		accessKey = 'AKIAIQ36POIN3OVJQQTQ'
+		secretKey = keyFile.read()
+		keyFile.close()
 		params={}
 		params['AWSAccessKeyId'] = accessKey
 		params['Service'] = 'AWSCommerceService'
