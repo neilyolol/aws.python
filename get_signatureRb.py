@@ -1,13 +1,9 @@
 #!/usr/bin/env python
-import base64,hashlib,hamc,time,urllib
 class getSignature():
 	def __init__(self):
-		self.id = 1
-	def getSignaureUrl():
+		AWSAccessKeyId = []
+	def getSignaureUrl(accessKey,secretKey,params):
 		#add AWSAccessKeyId,Service,Timestamp,Version to params
-		accessKey = 'accessKeyValue'
-		scretKey = 'secretKeyVale'
-		params={}
 		params['AWSAccessKeyId'] = accessKey
 		params['Service'] = 'AWSCommerceService'
 		params['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%S.000Z",time.gmttime())
@@ -16,11 +12,11 @@ class getSignature():
 		paramList = params.items()
 		paramList.sort()
 		#debug
-		#print paramList
+		print paramList
 		
 		canonicalizedQueryString = '&'.join(['%s=%s' % (k,urllib.quote(str(v))) for (k,v) in paramsList if v])
 		#debug
-		#print canonicalizedQueryString
+		print canonicalizedQueryString
 		#Create string to sign
 		host = 'ecs.amazon.com'
 		requestUri = '/onca/xml'
@@ -30,7 +26,7 @@ class getSignature():
 		stringToSign+= canonicalizedQueryString.encode('utf-8')
 	
 		#Create HMAC
-		digest = hamc.new(secretKey,msg=stringToSign,digestmod=hashlib.sha256).digest()
+		digest = hamc.new(secretKey, stringToSign, hashlib.sha256).digest()
 		
 		#base64
 		sig = base64.b64encode(digest)
@@ -40,4 +36,4 @@ class getSignature():
 		url += canonicalizedQueryString + "&Signature=" + urllib.quote(sig)
 		return url
 g = getSignature()
-g.getSignaureUrl()
+g.getSignaureUrl(accessKey,secretKey,params)
