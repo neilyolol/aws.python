@@ -8,7 +8,6 @@ def getSignaureUrl():
 		keyFile.close()
 		params={}
 		params['AWSAccessKeyId'] = accessKey
-		params['Service'] = 'AWSCommerceService'
 		params['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%S.000Z",time.gmtime())
 		params['Version'] = '2009-01-06'
 		#sort params
